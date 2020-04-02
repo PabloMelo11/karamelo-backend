@@ -17,6 +17,7 @@ const Route = use('Route');
 Route.get('/files/:file', 'FileController.show');
 
 Route.post('/sessions', 'SessionController.store').validator('Session');
+Route.post('forgot', 'ForgotPasswordController.store');
 
 Route.group(() => {
   Route.get('/users', 'UserController.index');
