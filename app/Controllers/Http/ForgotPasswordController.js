@@ -1,5 +1,8 @@
-const Mail = use('Mail');
+const { randomBytes } = require('crypto');
+const { promisify } = require('util');
 
+const Mail = use('Mail');
+const Env = use('Env');
 const User = use('App/Models/User');
 
 class ForgotPasswordController {
@@ -8,12 +11,26 @@ class ForgotPasswordController {
 
     const user = await User.findByOrFail('email', email);
 
-    await Mail.send('emails.forgotpassword', { name: user.name }, message => {
-      message
-        .to(user.email)
-        .from('oi@pisystem.com.br')
-        .subject('Karamelo - Recuperacao de senha');
+    const random = await promisify(randomBytes)(16);
+    const token = random.toString('hex');
+
+    await user.tokens().create({
+      token,
+      type: `forgotpassword`,
     });
+
+    const resetPasswordUrl = `${Env.get('FRONT_URL')}/reset?token=${token}`;
+
+    await Mail.send(
+      'emails.forgotpassword',
+      { name: user.name, token, resetPasswordUrl },
+      message => {
+        message
+          .to(user.email)
+          .from('oi@pisystem.com.br')
+          .subject('Karamelo - Recuperacao de senha');
+      }
+    );
   }
 }
 
