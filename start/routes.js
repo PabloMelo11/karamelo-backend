@@ -14,6 +14,10 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route');
 
+Route.get('/', response => {
+  response.send('Hello');
+});
+
 Route.get('/files/:file', 'FileController.show');
 
 Route.post('/sessions', 'SessionController.store').validator('Session');

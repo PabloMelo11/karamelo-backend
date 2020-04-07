@@ -2,10 +2,12 @@
 node_modules
 
 # Adonis directory for storing tmp files
-tmp
+tmp/uploads/*
+!tmp/test/*
 
 # Environment variables, never commit this file
 .env
+.database.env
 
 # The development sqlite file
 database/*.sqlite
