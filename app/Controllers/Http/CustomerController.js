@@ -8,6 +8,12 @@ class CustomerController {
     return customers;
   }
 
+  async show({ params }) {
+    const customer = await Customer.find(params.id);
+
+    return customer;
+  }
+
   async store({ request, response }) {
     const data = request.only([
       'name',

@@ -45,3 +45,16 @@ test('it should be able to list customers', async ({ assert, client }) => {
   assert.exists(response.body[0].id);
   response.assertStatus(200);
 });
+
+test('it should be to show single customer', async ({ assert, client }) => {
+  const user = await Factory.model('App/Models/User').create();
+  const customer = await Factory.model('App/Models/Customer').create();
+
+  const response = await client
+    .get(`/customers/${customer.id}`)
+    .loginVia(user, 'jwt')
+    .end();
+
+  response.assertStatus(200);
+  assert.exists(response.body.id);
+});
