@@ -29,5 +29,6 @@ Route.group(() => {
 }).middleware('auth');
 
 Route.group(() => {
+  Route.get('/customers', 'CustomerController.index');
   Route.post('/customers', 'CustomerController.store');
 }).middleware('auth');

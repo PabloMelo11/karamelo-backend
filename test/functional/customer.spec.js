@@ -32,3 +32,16 @@ test('it should be able to create a new customer', async ({
   response.assertStatus(201);
   assert.exists(response.body.id);
 });
+
+test('it should be able to list customers', async ({ assert, client }) => {
+  const user = await Factory.model('App/Models/User').create();
+  await Factory.model('App/Models/Customer').createMany(2);
+
+  const response = await client
+    .get('/customers')
+    .loginVia(user, 'jwt')
+    .end();
+
+  assert.exists(response.body[0].id);
+  response.assertStatus(200);
+});

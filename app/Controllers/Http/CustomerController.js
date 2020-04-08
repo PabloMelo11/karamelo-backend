@@ -2,6 +2,12 @@
 const Customer = use('App/Models/Customer');
 
 class CustomerController {
+  async index() {
+    const customers = await Customer.query().fetch();
+
+    return customers;
+  }
+
   async store({ request, response }) {
     const data = request.only([
       'name',
