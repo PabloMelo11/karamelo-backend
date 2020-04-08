@@ -27,3 +27,7 @@ Route.group(() => {
   Route.post('/users', 'UserController.store');
   Route.put('/users', 'UserController.update');
 }).middleware('auth');
+
+Route.group(() => {
+  Route.post('/customers', 'CustomerController.store');
+}).middleware('auth');

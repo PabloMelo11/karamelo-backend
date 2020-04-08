@@ -28,3 +28,18 @@ Factory.blueprint('App/Models/Token', (faker, i, data = {}) => {
     ...data,
   };
 });
+
+Factory.blueprint('App/Models/Customer', (faker, i, data = {}) => {
+  return {
+    name: faker.name(),
+    whatsapp: faker.phone(),
+    email: faker.email(),
+    state: faker.sentence({ words: 7 }),
+    city: faker.sentence({ words: 7 }),
+    neighborhood: faker.sentence({ words: 7 }),
+    street: faker.sentence({ words: 7 }),
+    number: faker.string(),
+    status: faker.string({ pool: 'active' }),
+    ...data,
+  };
+});
