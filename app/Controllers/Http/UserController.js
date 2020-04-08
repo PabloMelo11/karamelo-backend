@@ -6,7 +6,7 @@ const User = use('App/Models/User');
 class UserController {
   async index() {
     const users = await User.query()
-      .select(['id', 'name', 'email', 'avatar'])
+      .select(['id', 'name', 'email', 'avatar', 'status'])
       .fetch();
 
     return users;
