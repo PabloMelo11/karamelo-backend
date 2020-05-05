@@ -24,7 +24,7 @@ test('it should be able to create a new user', async ({ client, assert }) => {
     .end();
 
   response.assertStatus(201);
-  assert.exists(response.body.id);
+  assert.exists(response.body[0].id);
 });
 
 test('it should be able to list users', async ({ assert, client }) => {
@@ -50,7 +50,7 @@ test('it should be able to show single user', async ({ assert, client }) => {
 
   response.assertStatus(200);
 
-  assert.equal(response.body.id, user.id);
+  assert.equal(response.body[0].id, user.id);
 });
 
 test('it should be able to update user', async ({ assert, client }) => {

@@ -6,6 +6,10 @@ const Hash = use('Hash');
 const Env = use('Env');
 
 class User extends Model {
+  static get computed() {
+    return ['avatar_url'];
+  }
+
   static boot() {
     super.boot();
 

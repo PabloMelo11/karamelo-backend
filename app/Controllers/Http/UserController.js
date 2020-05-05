@@ -13,23 +13,31 @@ class UserController {
   }
 
   async show({ params }) {
-    const user = await User.find(params.id);
+    const user = await User.query()
+      .where('id', params.id)
+      .select(['id', 'name', 'email', 'avatar', 'status'])
+      .fetch();
 
     return user;
   }
 
   async store({ request, response }) {
-    const data = request.only(['name', 'email', 'password']);
+    const data = request.only(['name', 'email', 'password', 'status']);
 
-    const user = await User.create(data);
+    const createUser = await User.create(data);
+
+    const user = await User.query()
+      .where('id', createUser.id)
+      .select(['id', 'name', 'email', 'avatar', 'status'])
+      .fetch();
 
     return response.status(201).json(user);
   }
 
   async update({ request, auth }) {
-    const data = request.only(['name', 'email', 'status']);
-
     const user = await auth.getUser();
+
+    const data = request.only(['name', 'email', 'status']);
 
     const avatar = request.file('avatar');
 
