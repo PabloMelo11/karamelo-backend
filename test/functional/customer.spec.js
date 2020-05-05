@@ -58,3 +58,22 @@ test('it should be to show single customer', async ({ assert, client }) => {
   response.assertStatus(200);
   assert.exists(response.body.id);
 });
+
+test('it should be able to update customer', async ({ assert, client }) => {
+  const user = await Factory.model('App/Models/User').create();
+  const customer = await Factory.model('App/Models/Customer').create({
+    name: 'Guilherme',
+    email: 'jorge@teste.com',
+  });
+
+  const response = await client
+    .put(`/customers/${customer.id}`)
+    .loginVia(user, 'jwt')
+    .field('name', 'Jorge')
+    .field('email', 'jorge@gmail.com')
+    .end();
+
+  response.assertStatus(200);
+
+  assert.equal(response.body.name, 'Jorge');
+});

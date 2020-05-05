@@ -33,4 +33,5 @@ Route.group(() => {
   Route.get('/customers/:id', 'CustomerController.show');
 
   Route.post('/customers', 'CustomerController.store');
+  Route.put('/customers/:id', 'CustomerController.update');
 }).middleware('auth');

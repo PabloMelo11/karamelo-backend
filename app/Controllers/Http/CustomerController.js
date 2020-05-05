@@ -31,6 +31,26 @@ class CustomerController {
 
     return response.status(201).json(customer);
   }
+
+  async update({ request, params }) {
+    const customer = await Customer.find(params.id);
+
+    const data = request.only([
+      'name',
+      'whatsapp',
+      'email',
+      'state',
+      'city',
+      'neighborhood',
+      'street',
+      'number',
+      'status',
+    ]);
+
+    customer.merge(data);
+
+    return customer;
+  }
 }
 
 module.exports = CustomerController;
