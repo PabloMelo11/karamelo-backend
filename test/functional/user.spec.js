@@ -24,7 +24,7 @@ test('it should be able to create a new user', async ({ client, assert }) => {
     .end();
 
   response.assertStatus(201);
-  assert.exists(response.body[0].id);
+  assert.exists(response.body.id);
 });
 
 test('it should be able to list users', async ({ assert, client }) => {
@@ -64,6 +64,7 @@ test('it should be able to update user', async ({ assert, client }) => {
     .loginVia(user, 'jwt')
     .field('name', 'Jorge')
     .field('password', '123456789')
+    .field('password_confirmation', '123456789')
     .attach('avatar', Helpers.tmpPath('test/avatar.png'))
     .end();
 
@@ -74,5 +75,6 @@ test('it should be able to update user', async ({ assert, client }) => {
 
   await user.reload();
 
+  assert.equal(response.body.password, user.password);
   assert.isTrue(await Hash.verify('123456789', user.password));
 });

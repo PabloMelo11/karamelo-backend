@@ -24,12 +24,23 @@ class UserController {
   async store({ request, response }) {
     const data = request.only(['name', 'email', 'password', 'status']);
 
-    const createUser = await User.create(data);
+    const checkEmail = await User.query()
+      .where('email', data.email)
+      .first();
 
-    const user = await User.query()
-      .where('id', createUser.id)
-      .select(['id', 'name', 'email', 'avatar', 'status'])
-      .fetch();
+    if (checkEmail) {
+      return response.status(400).json({ error: 'Email already exists' });
+    }
+
+    const checkUsername = await User.query()
+      .where('name', data.name)
+      .first();
+
+    if (checkUsername) {
+      return response.status(400).json({ error: 'Name already exists' });
+    }
+
+    const user = await User.create(data);
 
     return response.status(201).json(user);
   }

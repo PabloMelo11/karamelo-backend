@@ -27,18 +27,25 @@ class CustomerController {
       'status',
     ]);
 
+    const checkEmail = await Customer.query()
+      .where('email', data.email)
+      .first();
+
+    if (checkEmail) {
+      return response.status(400).json({ error: 'This e-mail already used.' });
+    }
+
     const customer = await Customer.create(data);
 
     return response.status(201).json(customer);
   }
 
-  async update({ request, params }) {
+  async update({ request, response, params }) {
     const customer = await Customer.find(params.id);
 
     const data = request.only([
       'name',
       'whatsapp',
-      'email',
       'state',
       'city',
       'neighborhood',
@@ -48,6 +55,20 @@ class CustomerController {
     ]);
 
     customer.merge(data);
+
+    const email = request.input('email');
+
+    const checkEmail = await Customer.query()
+      .where('email', email)
+      .first();
+
+    if (checkEmail) {
+      return response.status(400).json({ error: 'This e-mail already used.' });
+    }
+
+    customer.email = email;
+
+    await customer.save();
 
     return customer;
   }

@@ -5,6 +5,7 @@ class SessionController {
     const { name, password } = request.only(['name', 'password']);
 
     const { token } = await auth.attempt(name, password);
+
     const user = await User.query()
       .where('name', name)
       .select('id', 'name', 'avatar')
