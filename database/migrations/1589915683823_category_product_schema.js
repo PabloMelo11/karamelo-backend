@@ -3,20 +3,18 @@ const Schema = use('Schema');
 
 class CategoryProductSchema extends Schema {
   up() {
-    this.create('category_products', table => {
+    this.create('category_product', table => {
       table.increments();
-      table.integer('product_id').unsigned();
-      table.integer('category_id').unsigned();
-
       table
-        .foreign('product_id')
+        .integer('product_id')
+        .unsigned()
         .references('id')
         .inTable('products')
         .onUpdate('CASCADE')
         .onDelete('SET NULL');
-
       table
-        .foreign('category_id')
+        .integer('category_id')
+        .unsigned()
         .references('id')
         .inTable('categories')
         .onUpdate('CASCADE')
@@ -27,7 +25,7 @@ class CategoryProductSchema extends Schema {
   }
 
   down() {
-    this.drop('category_products');
+    this.drop('category_product');
   }
 }
 
