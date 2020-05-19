@@ -43,3 +43,11 @@ Route.group(() => {
   );
   Route.put('/customers/:id', 'CustomerController.update');
 }).middleware('auth');
+
+Route.group(() => {
+  Route.get('/categories', 'CategoryController.index');
+  Route.get('/categories/:id', 'CategoryController.show');
+
+  Route.post('/categories', 'CategoryController.store');
+  Route.put('/categories/:id', 'CategoryController.update');
+}).middleware('auth');
