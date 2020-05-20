@@ -17,6 +17,7 @@ Factory.blueprint('App/Models/User', (faker, i, data = {}) => {
     name: faker.name(),
     email: faker.email(),
     password: faker.string(),
+    status: 'active',
     ...data,
   };
 });
@@ -34,6 +35,12 @@ Factory.blueprint('App/Models/Customer', (faker, i, data = {}) => {
     name: faker.name(),
     whatsapp: faker.phone(),
     email: faker.email(),
+    state: faker.sentence({ words: 12 }),
+    city: faker.sentence({ words: 12 }),
+    neighborhood: faker.sentence({ words: 12 }),
+    street: faker.sentence({ words: 12 }),
+    number: faker.sentence({ words: 4 }),
+    status: 'active',
     ...data,
   };
 });
@@ -41,7 +48,7 @@ Factory.blueprint('App/Models/Customer', (faker, i, data = {}) => {
 Factory.blueprint('App/Models/Category', (faker, i, data = {}) => {
   return {
     title: faker.name(),
-    description: faker.phone(),
+    description: faker.string(),
     ...data,
   };
 });
