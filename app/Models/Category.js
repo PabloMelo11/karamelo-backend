@@ -5,6 +5,10 @@ class Category extends Model {
   products() {
     return this.belongsToMany('App/Models/Product');
   }
+
+  user() {
+    return this.belongsTo('App/Models/User');
+  }
 }
 
 module.exports = Category;

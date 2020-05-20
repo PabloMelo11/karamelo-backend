@@ -1,8 +1,5 @@
 const { test, trait } = use('Test/Suite')('Category');
 
-// const Hash = use('Hash');
-// const Helpers = use('Helpers');
-
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory');
 

@@ -38,6 +38,14 @@ class User extends Model {
     return this.hasMany('App/Models/Token');
   }
 
+  categories() {
+    return this.hasMany('App/Models/Category');
+  }
+
+  products() {
+    return this.hasMany('App/Models/Product');
+  }
+
   getAvatarUrl({ avatar }) {
     return `${Env.get('APP_URL')}/files/${avatar}`;
   }
