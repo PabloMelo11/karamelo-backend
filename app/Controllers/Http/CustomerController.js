@@ -40,13 +40,14 @@ class CustomerController {
     return response.status(201).json(customer);
   }
 
-  async update({ request, response, params }) {
+  async update({ request, params }) {
     const customer = await Customer.find(params.id);
 
     const data = request.only([
       'name',
       'whatsapp',
       'state',
+      'email',
       'city',
       'neighborhood',
       'street',
@@ -55,18 +56,6 @@ class CustomerController {
     ]);
 
     customer.merge(data);
-
-    const email = request.input('email');
-
-    const checkEmail = await Customer.query()
-      .where('email', email)
-      .first();
-
-    if (checkEmail) {
-      return response.status(400).json({ error: 'This e-mail already used.' });
-    }
-
-    customer.email = email;
 
     await customer.save();
 

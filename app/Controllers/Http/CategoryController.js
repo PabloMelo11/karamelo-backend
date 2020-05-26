@@ -4,30 +4,39 @@ const Category = use('App/Models/Category');
 class CategoryController {
   async index() {
     const categories = await Category.query()
-      .select(['id', 'title', 'description'])
+      .with('user', builder => {
+        builder.select(['id', 'name', 'avatar', 'email', 'status']);
+      })
       .fetch();
 
     return categories;
   }
 
-  async show({ params }) {
+  async show({ response, params }) {
     const category = await Category.query()
       .where('id', params.id)
-      .select(['id', 'title', 'description'])
+      .select(['id', 'title', 'description', 'user_id'])
+      .with('user', builder => {
+        builder.select(['id', 'name', 'avatar', 'email', 'status']);
+      })
       .fetch();
+
+    if (!category) {
+      response.status(400).json({ error: 'Essa categoria nao existe.' });
+    }
 
     return category;
   }
 
   async store({ request, response }) {
-    const data = request.only(['title', 'description']);
+    const data = request.only(['title', 'description', 'user_id']);
 
     const checkCategory = await Category.query()
       .where('title', data.title)
       .first();
 
     if (checkCategory) {
-      return response.status(400).json({ error: 'Category already exists' });
+      return response.status(400).json({ error: 'Essa categoria ja existe.' });
     }
 
     const category = await Category.create(data);
@@ -39,24 +48,12 @@ class CategoryController {
     const category = await Category.find(params.id);
 
     if (!category) {
-      return response.status(400).json({ error: 'Category does not exists.' });
+      return response.status(400).json({ error: 'Essa categoria nao existe.' });
     }
 
-    const data = request.only(['description']);
+    const data = request.only(['description', 'title']);
 
     category.merge(data);
-
-    const title = request.input(['title']);
-
-    const checkCategory = await Category.query()
-      .where('title', title)
-      .first();
-
-    if (checkCategory) {
-      return response.status(400).json({ error: 'Category already used.' });
-    }
-
-    category.title = title;
 
     await category.save();
 

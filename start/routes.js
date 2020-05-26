@@ -53,9 +53,9 @@ Route.group(() => {
 }).middleware('auth');
 
 Route.group(() => {
-  // Route.get('/categories', 'CategoryController.index');
-  // Route.get('/categories/:id', 'CategoryController.show');
+  Route.get('/products', 'ProductController.index');
+  Route.get('/products/:id', 'ProductController.show');
 
   Route.post('/products', 'ProductController.store');
-  // Route.put('/categories/:id', 'CategoryController.update');
+  Route.put('/products/:id', 'ProductController.update');
 }).middleware('auth');
