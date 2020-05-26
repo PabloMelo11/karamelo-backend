@@ -1,6 +1,6 @@
 const { test, trait } = use('Test/Suite')('Product');
 
-const Helpers = use('Helpers');
+// const Helpers = use('Helpers');
 
 /** @type {import('@adonisjs/lucid/src/Factory')} */
 const Factory = use('Factory');
@@ -14,7 +14,9 @@ test('it should be able to create a new product', async ({
   assert,
 }) => {
   const user = await Factory.model('App/Models/User').create();
-  const category = await Factory.model('App/Models/Category').create();
+  const category = await Factory.model('App/Models/Category').make();
+
+  await user.categories().save(category);
 
   const response = await client
     .post('/products')
@@ -23,13 +25,12 @@ test('it should be able to create a new product', async ({
       name: 'Diamente negro',
       description: 'Essa categortia e para os doces que de chocolate',
       price: 15.99,
-      quantity: 1,
-      category: category.name,
+      quantity: 5,
+      category_id: category.id,
     })
     .end();
 
-  console.log(response.body);
-
-  // response.assertStatus(201);
-  // assert.exists(response.body.id);
+  response.assertStatus(201);
+  assert.equal(response.body.category_id, category.id);
+  assert.equal(category.user_id, user.id);
 });

@@ -51,3 +51,11 @@ Route.group(() => {
   Route.post('/categories', 'CategoryController.store');
   Route.put('/categories/:id', 'CategoryController.update');
 }).middleware('auth');
+
+Route.group(() => {
+  // Route.get('/categories', 'CategoryController.index');
+  // Route.get('/categories/:id', 'CategoryController.show');
+
+  Route.post('/products', 'ProductController.store');
+  // Route.put('/categories/:id', 'CategoryController.update');
+}).middleware('auth');

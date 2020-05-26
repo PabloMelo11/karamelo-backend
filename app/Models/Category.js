@@ -7,7 +7,7 @@ class Category extends Model {
   }
 
   user() {
-    return this.belongsTo('App/Models/User');
+    return this.hasOne('App/Models/User', 'id', 'user_id');
   }
 }
 
