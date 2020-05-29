@@ -8,8 +8,8 @@ class Product extends Model {
     return ['image_url'];
   }
 
-  category() {
-    return this.belongsTo('App/Models/Category');
+  categories() {
+    return this.belongsToMany('App/Models/Category');
   }
 
   user() {

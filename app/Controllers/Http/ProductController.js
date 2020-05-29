@@ -19,7 +19,7 @@ class ProductController {
         'user_id',
         'created_at',
       ])
-      .with('category', builder => {
+      .with('categories', builder => {
         builder.select(['id', 'title']);
       })
       .fetch();
@@ -30,7 +30,7 @@ class ProductController {
   async show({ response, params }) {
     const product = await Product.query()
       .where('id', params.id)
-      .with('category', builder => {
+      .with('categories', builder => {
         builder.select(['id', 'title', 'description']);
       })
       .with('user', builder => {
@@ -46,7 +46,7 @@ class ProductController {
   }
 
   async store({ request, response, auth }) {
-    const createProductWithUser = await auth.getUser();
+    const user = await auth.getUser();
 
     const data = request.only([
       'name',
@@ -64,9 +64,9 @@ class ProductController {
       return response.status(400).json({ error: 'Category does not exists.' });
     }
 
-    await createProductWithUser.products().create(data);
+    await user.products().create(data);
 
-    return response.status(201).json(data, createProductWithUser.id);
+    return response.status(201).json(data, user.id);
   }
 
   async update({ request, response, params }) {
