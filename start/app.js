@@ -21,6 +21,7 @@ const providers = [
   '@adonisjs/antl/providers/AntlProvider',
   '@adonisjs/mail/providers/MailProvider',
   '@adonisjs/framework/providers/ViewProvider',
+  'adonis-bumblebee/providers/BumblebeeProvider',
   path.join(__dirname, '..', 'providers', 'CustomValidationProvider'),
 ];
 
@@ -33,7 +34,10 @@ const providers = [
 | Providers for migrations, tests etc.
 |
 */
-const aceProviders = ['@adonisjs/lucid/providers/MigrationsProvider'];
+const aceProviders = [
+  '@adonisjs/lucid/providers/MigrationsProvider',
+  'adonis-bumblebee/providers/CommandsProvider',
+];
 
 /*
 |--------------------------------------------------------------------------

@@ -59,3 +59,11 @@ Route.group(() => {
   Route.post('/products', 'ProductController.store');
   Route.put('/products/:id', 'ProductController.update');
 }).middleware('auth');
+
+Route.group(() => {
+  Route.get('/orders', 'OrderController.index');
+  Route.get('/orders/:id', 'OrderController.show');
+
+  Route.post('/orders', 'OrderController.store');
+  Route.put('/orders/:id', 'OrderController.update');
+}).middleware('auth');

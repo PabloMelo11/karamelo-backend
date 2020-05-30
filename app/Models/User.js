@@ -32,6 +32,10 @@ class User extends Model {
     return this.hasMany('App/Models/Product');
   }
 
+  orders() {
+    return this.hasMany('App/Models/Order');
+  }
+
   getAvatarUrl({ avatar }) {
     return `${Env.get('APP_URL')}/files/${avatar || 'placeholder.png'}`;
   }

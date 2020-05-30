@@ -9,16 +9,16 @@ class Order extends Model {
     this.addHook('afterPaginate', 'OrderHook.updateCollectionValues');
   }
 
-  products() {
+  items() {
     return this.hasMany('App/Models/OrderItem');
-  }
-
-  customer() {
-    return this.belongsTo('App/Models/Customer', 'customer_id', 'id');
   }
 
   user() {
     return this.belongsTo('App/Models/User', 'user_id', 'id');
+  }
+
+  customer() {
+    return this.belongsTo('App/Models/Customer', 'customer_id', 'id');
   }
 }
 

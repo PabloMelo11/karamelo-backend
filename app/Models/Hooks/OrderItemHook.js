@@ -1,10 +1,8 @@
-// eslint-disable-next-line no-multi-assign
-const OrderProductHook = (exports = module.exports = {});
+const OrderItemHook = (exports = module.exports = {});
 
 const Product = use('App/Models/Product');
 
-OrderProductHook.updateSubtotal = async modelInstance => {
+OrderItemHook.updateSubtotal = async modelInstance => {
   const product = await Product.find(modelInstance.product_id);
-
   modelInstance.subtotal = modelInstance.quantity * product.price;
 };

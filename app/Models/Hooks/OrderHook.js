@@ -1,22 +1,21 @@
-// eslint-disable-next-line no-multi-assign
 const OrderHook = (exports = module.exports = {});
 
 OrderHook.updateValues = async modelInstance => {
   modelInstance.$sideLoaded.subtotal = await modelInstance
-    .products()
+    .items()
     .getSum('subtotal');
 
-  modelInstance.$sideLoaded.quantity_products = await modelInstance
-    .products()
+  modelInstance.$sideLoaded.quantity_items = await modelInstance
+    .items()
     .getSum('quantity');
 
   modelInstance.total = modelInstance.$sideLoaded.subtotal;
+
+  return modelInstance;
 };
 
-OrderHook.updateCollectionValues = async modelsInstance => {
-  // eslint-disable-next-line no-restricted-syntax
-  for (let modelInstance of modelsInstance) {
-    // eslint-disable-next-line no-await-in-loop
-    modelInstance = await OrderHook.updateValues(modelInstance);
+OrderHook.updateCollectionValues = async models => {
+  for (let model of models) {
+    model = await OrderHook.updateValues(model);
   }
 };

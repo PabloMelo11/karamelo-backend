@@ -8,8 +8,15 @@ class CustomerController {
     return customers;
   }
 
-  async show({ params }) {
-    const customer = await Customer.find(params.id);
+  async show({ params, response }) {
+    const customer = await Customer.query()
+      .where('id', params.id)
+      .with('orders')
+      .fetch();
+
+    if (!customer) {
+      return response.status(400).json({ error: 'Customer not found' });
+    }
 
     return customer;
   }
