@@ -1,9 +1,6 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Product = use('App/Models/Product');
 
-/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-const Category = use('App/Models/Category');
-
 const Helpers = use('Helpers');
 
 class ProductController {
@@ -15,7 +12,6 @@ class ProductController {
         'image',
         'price',
         'quantity',
-        'category_id',
         'user_id',
         'created_at',
       ])
@@ -48,25 +44,22 @@ class ProductController {
   async store({ request, response, auth }) {
     const user = await auth.getUser();
 
-    const data = request.only([
+    const { categories, ...data } = request.only([
       'name',
       'description',
       'price',
       'quantity',
-      'category_id',
+      'categories',
     ]);
 
-    const checkCategory = await Category.query()
-      .where('id', data.category_id)
-      .first();
+    const product = await user.products().create(data);
 
-    if (!checkCategory) {
-      return response.status(400).json({ error: 'Category does not exists.' });
+    if (categories && categories.length > 0) {
+      await product.categories().attach(categories);
+      await product.load('categories');
     }
 
-    await user.products().create(data);
-
-    return response.status(201).json(data, user.id);
+    return response.status(200).json(product);
   }
 
   async update({ request, response, params }) {
@@ -76,13 +69,15 @@ class ProductController {
       response.status(400).json({ error: 'Produto nao encontrado.' });
     }
 
-    const data = request.only([
+    const { categories, ...data } = request.only([
       'name',
       'description',
       'price',
       'quantity',
-      'category_id',
+      'categories',
     ]);
+
+    await product.categories().detach();
 
     const image = request.file('image');
 
@@ -99,6 +94,11 @@ class ProductController {
     }
 
     product.merge(data);
+
+    if (categories && categories.length > 0) {
+      await product.categories().attach(categories);
+      await product.load('categories');
+    }
 
     await product.save();
 

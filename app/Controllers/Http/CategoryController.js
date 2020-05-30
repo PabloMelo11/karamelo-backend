@@ -28,8 +28,10 @@ class CategoryController {
     return category;
   }
 
-  async store({ request, response }) {
-    const data = request.only(['title', 'description', 'user_id']);
+  async store({ request, response, auth }) {
+    const user = await auth.getUser();
+
+    const data = request.only(['title', 'description']);
 
     const checkCategory = await Category.query()
       .where('title', data.title)
@@ -39,7 +41,7 @@ class CategoryController {
       return response.status(400).json({ error: 'Essa categoria ja existe.' });
     }
 
-    const category = await Category.create(data);
+    const category = await user.categories().create(data);
 
     return response.status(201).json(category);
   }

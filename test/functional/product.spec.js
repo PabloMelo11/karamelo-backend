@@ -26,12 +26,11 @@ test('it should be able to create a new product', async ({
       description: 'Essa categortia e para os doces que de chocolate',
       price: 15.99,
       quantity: 5,
-      category_id: category.id,
     })
     .end();
 
-  response.assertStatus(201);
-  assert.equal(response.body.category_id, category.id);
+  response.assertStatus(200);
+  assert.exists(response.body.id);
   assert.equal(category.user_id, user.id);
 });
 
@@ -65,7 +64,6 @@ test('it should be able show a product', async ({ assert, client }) => {
 
   response.assertStatus(200);
 
-  assert.equal(response.body.category_id, category.id);
   assert.equal(response.body.user_id, user.id);
   assert.equal(response.body.id, product.id);
 });
@@ -79,7 +77,6 @@ test('it should be able to update a product', async ({ assert, client }) => {
     description: 'Esse produto e para todos os bolos de chocolate',
     price: 19.0,
     quantity: 3,
-    category_id: category.id,
   });
 
   await Promise.all([

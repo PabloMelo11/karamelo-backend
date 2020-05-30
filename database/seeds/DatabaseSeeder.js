@@ -8,6 +8,9 @@
 |
 */
 
+/** @type {import('@adonisjs/lucid/src/Factory')} */
+const Factory = use('Factory');
+
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const User = use('App/Models/User');
 
@@ -16,25 +19,28 @@ const Customer = use('App/Models/Customer');
 
 class DatabaseSeeder {
   async run() {
-    const user = await User.create({
+    await User.create({
       name: 'admin',
       email: 'admin@gmail.com',
       password: '123456',
       status: 'active',
     });
 
-    const category = await user.categories().create({
-      title: 'Chocolate',
-      description: 'Categoria para os bolos de chocolate.',
-    });
+    const categories = await Factory.model('App/Models/Category').createMany(5);
 
-    await user.products().create({
-      name: 'Bolo de chocolate',
-      description: 'Esse bolo de chocolate e para minha namorada',
-      price: 15.99,
-      quantity: 3,
-      category_id: category.id,
-    });
+    await Promise.all(
+      categories.map(async category => {
+        const products = await Factory.model('App/Models/Product').createMany(
+          5
+        );
+
+        await Promise.all(
+          products.map(async product => {
+            await product.categories().attach([category.id]);
+          })
+        );
+      })
+    );
 
     await Customer.create({
       name: 'Iago',
