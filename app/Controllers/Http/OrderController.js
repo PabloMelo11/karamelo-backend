@@ -65,11 +65,11 @@ class OrderController {
     }
   }
 
-  async update({ request, params, response, transform }) {
+  async update({ params, request, response, transform }) {
     let order = await Order.find(params.id);
 
     if (!order) {
-      return response.status(400).json({ error: 'Order does not exists' });
+      return response.status(400).json({ error: 'Order not found.' });
     }
 
     const trx = await Database.beginTransaction();
@@ -86,12 +86,14 @@ class OrderController {
       const service = new OrderService(order, trx);
 
       if (items && items.length > 0) {
-        await service.updateItems(items);
+        await service.syncItems(items);
       }
 
       await order.save(trx);
 
       await trx.commit();
+
+      order = await Order.find(order.id);
 
       order = await transform
         .include('items,customer')
@@ -100,7 +102,9 @@ class OrderController {
       return response.status(200).json(order);
     } catch (err) {
       await trx.rollback();
-      return response.status(400).json({ error: err.message });
+      return response.status(400).send({
+        message: err.message,
+      });
     }
   }
 }

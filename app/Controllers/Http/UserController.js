@@ -16,6 +16,9 @@ class UserController {
     const user = await User.query()
       .where('id', params.id)
       .select(['id', 'name', 'email', 'avatar', 'status'])
+      .with('products')
+      .with('categories')
+      .with('orders')
       .fetch();
 
     return user;

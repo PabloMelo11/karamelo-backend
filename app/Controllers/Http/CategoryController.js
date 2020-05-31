@@ -19,7 +19,7 @@ class CategoryController {
       .with('user', builder => {
         builder.select(['id', 'name', 'avatar', 'email', 'status']);
       })
-      .fetch();
+      .first();
 
     if (!category) {
       response.status(400).json({ error: 'Essa categoria nao existe.' });

@@ -1,6 +1,13 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Customer = use('App/Models/Customer');
 
+// /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+// const Order = use('App/Models/Order');
+
+const CustomerTransformer = use(
+  'App/Transformers/Customer/CustomerTransformer'
+);
+
 class CustomerController {
   async index() {
     const customers = await Customer.query().fetch();
@@ -8,17 +15,16 @@ class CustomerController {
     return customers;
   }
 
-  async show({ params, response }) {
-    const customer = await Customer.query()
-      .where('id', params.id)
-      .with('orders')
-      .fetch();
+  async show({ params, response, transform }) {
+    const customer = await Customer.find(params.id);
 
     if (!customer) {
-      return response.status(400).json({ error: 'Customer not found' });
+      return response.status(400).json({ errro: 'Customer not found' });
     }
 
-    return customer;
+    return response.json(
+      await transform.include('orders').item(customer, CustomerTransformer)
+    );
   }
 
   async store({ request, response }) {
