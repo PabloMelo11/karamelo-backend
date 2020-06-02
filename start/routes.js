@@ -31,7 +31,6 @@ Route.group(() => {
   Route.get('/users/:id', 'UserController.show');
 
   Route.post('/users', 'UserController.store').validator('CreateUser');
-  Route.put('/users', 'UserController.update').validator('UpdateUser');
 }).middleware('auth');
 
 Route.group(() => {
@@ -66,4 +65,9 @@ Route.group(() => {
 
   Route.post('/orders', 'OrderController.store');
   Route.put('/orders/:id', 'OrderController.update');
+}).middleware('auth');
+
+Route.group(() => {
+  Route.get('/me/orders', 'ProfileController.index');
+  Route.put('/me', 'ProfileController.update');
 }).middleware('auth');
