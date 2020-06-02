@@ -54,7 +54,7 @@ test('it should be able to show single category', async ({
 
   response.assertStatus(200);
 
-  assert.equal(response.body[0].id, category.id);
+  assert.equal(response.body.id, category.id);
 });
 
 test('it should be able to update a category', async ({ client, assert }) => {

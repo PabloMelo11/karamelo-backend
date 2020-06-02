@@ -9,7 +9,7 @@ OrderHook.updateValues = async modelInstance => {
     .items()
     .getSum('quantity');
 
-  modelInstance.total = modelInstance.$sideLoaded.subtotal;
+  modelInstance.total = await modelInstance.$sideLoaded.subtotal;
 
   return modelInstance;
 };
