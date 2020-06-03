@@ -1,9 +1,6 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Customer = use('App/Models/Customer');
 
-// /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
-// const Order = use('App/Models/Order');
-
 const CustomerTransformer = use(
   'App/Transformers/Customer/CustomerTransformer'
 );
@@ -22,9 +19,7 @@ class CustomerController {
       return response.status(400).json({ errro: 'Customer not found' });
     }
 
-    return response.json(
-      await transform.include('orders').item(customer, CustomerTransformer)
-    );
+    return response.json(await transform.item(customer, CustomerTransformer));
   }
 
   async store({ request, response }) {

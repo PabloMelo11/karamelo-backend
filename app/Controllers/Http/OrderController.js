@@ -36,13 +36,16 @@ class OrderController {
     const trx = await Database.beginTransaction();
 
     try {
-      const { customer_id, items, status } = request.only([
+      const { customer_id, items, status, date } = request.only([
         'customer_id',
         'items',
         'status',
+        'date',
       ]);
 
-      let order = await user.orders().create({ customer_id, status }, trx);
+      let order = await user
+        .orders()
+        .create({ customer_id, status, date }, trx);
 
       const service = new OrderService(order, trx);
 
