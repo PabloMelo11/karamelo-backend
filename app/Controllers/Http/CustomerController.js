@@ -19,7 +19,9 @@ class CustomerController {
       return response.status(400).json({ errro: 'Customer not found' });
     }
 
-    return response.json(await transform.item(customer, CustomerTransformer));
+    return response.json(
+      await transform.include('orders').item(customer, CustomerTransformer)
+    );
   }
 
   async store({ request, response }) {
