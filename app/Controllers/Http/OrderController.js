@@ -86,13 +86,14 @@ class OrderController {
     const trx = await Database.beginTransaction();
 
     try {
-      const { customer_id, items, status } = request.only([
+      const { customer_id, items, status, date } = request.only([
         'customer_id',
         'items',
         'status',
+        'date',
       ]);
 
-      order.merge({ customer_id, status });
+      order.merge({ customer_id, status, date });
 
       const service = new OrderService(order, trx);
 
@@ -109,6 +110,14 @@ class OrderController {
       order = await transform
         .include('items,customer')
         .item(order, OrderTransformer);
+
+      if (order.total !== null || undefined) {
+        const currentOrder = await Order.find(order.id);
+
+        currentOrder.total = order.total;
+
+        await currentOrder.save();
+      }
 
       return response.status(200).json(order);
     } catch (err) {
