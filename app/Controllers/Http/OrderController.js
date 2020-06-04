@@ -61,6 +61,14 @@ class OrderController {
         .include('items,customer')
         .item(order, OrderTransformer);
 
+      if (order.total !== null || undefined) {
+        const currentOrder = await Order.find(order.id);
+
+        currentOrder.total = order.total;
+
+        await currentOrder.save();
+      }
+
       return response.status(201).json(order);
     } catch (err) {
       await trx.rollback();

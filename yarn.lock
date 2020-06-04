@@ -342,6 +342,11 @@ adonis-bumblebee@^2.2.0:
   resolved "https://registry.yarnpkg.com/adonis-bumblebee/-/adonis-bumblebee-2.2.0.tgz#d959a973806df17efe3257c76b54f15f3477d9ed"
   integrity sha512-NqwPBPIXmAlpOGZizvkwrtVzFXBoCWvfDFj1TE/NfyTFxRiCsYY6tTyBtyBz/Y4n2cYPTisg/x+ksZwZorzNvw==
 
+adonis-cast-attributes@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/adonis-cast-attributes/-/adonis-cast-attributes-1.0.0.tgz#2039847f94fbf759e5c0541e4f5a4ec6a737b1f9"
+  integrity sha512-lEvae+Z9xh0A4JPIH1KTYLTiuzauGUPXCByN/X/u6tyG6yzTat2XVuPa8IQUNXkNyALAr8POj1/TQ4t6rZ0u4g==
+
 ajv@^6.10.0, ajv@^6.10.2, ajv@^6.5.5:
   version "6.10.2"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.10.2.tgz#d3cea04d6b017b2894ad69040fec8b623eb4bd52"

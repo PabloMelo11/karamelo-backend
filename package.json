@@ -29,6 +29,7 @@
     "@adonisjs/validator": "^5.0.6",
     "@adonisjs/vow": "^1.0.17",
     "adonis-bumblebee": "^2.2.0",
+    "adonis-cast-attributes": "^1.0.0",
     "date-fns": "^2.11.1",
     "pg": "^8.0.0"
   },

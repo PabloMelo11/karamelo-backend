@@ -22,6 +22,7 @@ const providers = [
   '@adonisjs/mail/providers/MailProvider',
   '@adonisjs/framework/providers/ViewProvider',
   'adonis-bumblebee/providers/BumblebeeProvider',
+  'adonis-cast-attributes/providers/CastAttributesProvider',
   path.join(__dirname, '..', 'providers', 'CustomValidationProvider'),
 ];
 

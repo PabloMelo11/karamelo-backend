@@ -7,6 +7,8 @@ class Order extends Model {
 
     this.addHook('afterFind', 'OrderHook.updateValues');
     this.addHook('afterPaginate', 'OrderHook.updateCollectionValues');
+
+    this.addTrait('@provider:CastAttributes');
   }
 
   items() {
@@ -19,6 +21,12 @@ class Order extends Model {
 
   customer() {
     return this.belongsTo('App/Models/Customer', 'customer_id', 'id');
+  }
+
+  static get casts() {
+    return {
+      total: 'float',
+    };
   }
 }
 

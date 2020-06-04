@@ -1,10 +1,6 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const Customer = use('App/Models/Customer');
 
-const CustomerTransformer = use(
-  'App/Transformers/Customer/CustomerTransformer'
-);
-
 class CustomerController {
   async index() {
     const customers = await Customer.query().fetch();
@@ -12,16 +8,26 @@ class CustomerController {
     return customers;
   }
 
-  async show({ params, response, transform }) {
+  async show({ params, response }) {
     const customer = await Customer.find(params.id);
+
+    await customer.load('orders', ordersBuilder => {
+      ordersBuilder.with('user', userBuilder => {
+        userBuilder.select(['id', 'name', 'email', 'avatar']);
+      });
+    });
+
+    const sidesLoaded = customer.$sideLoaded;
+
+    const custom = {
+      quantity_orders: Number(sidesLoaded.quantity_orders),
+    };
 
     if (!customer) {
       return response.status(400).json({ errro: 'Customer not found' });
     }
 
-    return response.json(
-      await transform.include('orders').item(customer, CustomerTransformer)
-    );
+    return response.json({ customer, custom });
   }
 
   async store({ request, response }) {

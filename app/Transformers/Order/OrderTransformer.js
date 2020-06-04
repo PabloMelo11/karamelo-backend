@@ -28,8 +28,8 @@ class OrderTransformer extends BumblebeeTransformer {
         order.__meta__ && order.__meta__.quantity_items
           ? Number(order.__meta__.quantity_items)
           : 0,
-      date: order.created_at,
-      order_date: order.date ? order.date : null,
+      created_at: order.created_at,
+      date: order.date ? order.date : null,
     };
   }
 
