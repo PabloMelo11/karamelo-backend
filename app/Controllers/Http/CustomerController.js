@@ -41,6 +41,7 @@ class CustomerController {
       'street',
       'number',
       'status',
+      'cpf',
     ]);
 
     const checkEmail = await Customer.query()
@@ -49,6 +50,14 @@ class CustomerController {
 
     if (checkEmail) {
       return response.status(400).json({ error: 'This e-mail already used.' });
+    }
+
+    const checkCPF = await Customer.query()
+      .where('cpf', data.cpf)
+      .first();
+
+    if (checkCPF) {
+      return response.status(400).json({ error: 'This CFP already used.' });
     }
 
     const customer = await Customer.create(data);
@@ -69,6 +78,7 @@ class CustomerController {
       'street',
       'number',
       'status',
+      'cpf',
     ]);
 
     customer.merge(data);
