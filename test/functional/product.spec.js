@@ -25,7 +25,6 @@ test('it should be able to create a new product', async ({
       name: 'Diamente negro',
       description: 'Essa categortia e para os doces que de chocolate',
       price: 15.99,
-      quantity: 5,
     })
     .end();
 
@@ -76,7 +75,6 @@ test('it should be able to update a product', async ({ assert, client }) => {
     name: 'Bolo de chocolate',
     description: 'Esse produto e para todos os bolos de chocolate',
     price: 19.0,
-    quantity: 3,
   });
 
   await Promise.all([

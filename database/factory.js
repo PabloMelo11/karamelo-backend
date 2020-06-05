@@ -41,6 +41,7 @@ Factory.blueprint('App/Models/Customer', (faker, i, data = {}) => {
     street: faker.sentence({ words: 12 }),
     number: faker.sentence({ words: 4 }),
     status: 'active',
+    cpf: faker.integer(),
     ...data,
   };
 });
@@ -58,7 +59,6 @@ Factory.blueprint('App/Models/Product', (faker, i, data = {}) => {
     name: faker.name(),
     description: faker.name(),
     price: faker.floating({ min: 0, max: 1000, fixed: 2 }),
-    quantity: faker.integer({ min: 0, max: 15 }),
     ...data,
   };
 });

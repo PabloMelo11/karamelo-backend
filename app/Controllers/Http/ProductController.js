@@ -6,15 +6,7 @@ const Helpers = use('Helpers');
 class ProductController {
   async index() {
     const products = await Product.query()
-      .select([
-        'id',
-        'name',
-        'image',
-        'price',
-        'stock',
-        'user_id',
-        'created_at',
-      ])
+      .select(['id', 'name', 'image', 'price', 'user_id', 'created_at'])
       .with('categories', builder => {
         builder.select(['id', 'title']);
       })
@@ -48,7 +40,6 @@ class ProductController {
       'name',
       'description',
       'price',
-      'stock',
       'categories',
     ]);
 
@@ -73,7 +64,7 @@ class ProductController {
       'name',
       'description',
       'price',
-      'stock',
+      '',
       'categories',
     ]);
 

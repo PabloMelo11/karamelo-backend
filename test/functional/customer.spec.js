@@ -26,6 +26,7 @@ test('it should be able to create a new customer', async ({
       street: 'ruaqwe',
       number: '127A',
       status: 'active',
+      cpf: '481032451',
     })
     .end();
 
@@ -56,7 +57,7 @@ test('it should be to show single customer', async ({ assert, client }) => {
     .end();
 
   response.assertStatus(200);
-  assert.exists(response.body.id);
+  assert.exists(response.body.customer.id);
 });
 
 test('it should be able to update customer', async ({ assert, client }) => {
