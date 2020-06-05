@@ -26,6 +26,8 @@ Route.post('/reset', 'ResetPasswordController.store').validator(
   'ResetPassword'
 );
 
+Route.get('/home', 'HomeController.index').middleware('auth');
+
 Route.group(() => {
   Route.get('/users', 'UserController.index');
   Route.get('/users/:id', 'UserController.show');

@@ -5,3 +5,9 @@ CustomerHook.quantityOrders = async customerInstance => {
     .orders()
     .getCount();
 };
+
+CustomerHook.updateCollectionValues = async models => {
+  for (let model of models) {
+    model = await CustomerHook.quantityOrders(model);
+  }
+};

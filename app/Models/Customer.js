@@ -6,6 +6,7 @@ class Customer extends Model {
     super.boot();
 
     this.addHook('afterFind', 'CustomerHook.quantityOrders');
+    this.addHook('afterPaginate', 'CustomerHook.updateCollectionValues');
   }
 
   orders() {

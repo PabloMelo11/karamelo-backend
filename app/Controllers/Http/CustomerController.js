@@ -11,6 +11,10 @@ class CustomerController {
   async show({ params, response }) {
     const customer = await Customer.find(params.id);
 
+    if (!customer) {
+      return response.status(400).json({ errro: 'Customer not found' });
+    }
+
     await customer.load('orders', ordersBuilder => {
       ordersBuilder.with('user', userBuilder => {
         userBuilder.select(['id', 'name', 'email', 'avatar']);
@@ -22,10 +26,6 @@ class CustomerController {
     const custom = {
       quantity_orders: Number(sidesLoaded.quantity_orders),
     };
-
-    if (!customer) {
-      return response.status(400).json({ errro: 'Customer not found' });
-    }
 
     return response.json({ customer, custom });
   }
