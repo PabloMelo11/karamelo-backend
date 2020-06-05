@@ -11,7 +11,7 @@ class ProductController {
         'name',
         'image',
         'price',
-        'quantity',
+        'stock',
         'user_id',
         'created_at',
       ])
@@ -48,7 +48,7 @@ class ProductController {
       'name',
       'description',
       'price',
-      'quantity',
+      'stock',
       'categories',
     ]);
 
@@ -73,7 +73,7 @@ class ProductController {
       'name',
       'description',
       'price',
-      'quantity',
+      'stock',
       'categories',
     ]);
 

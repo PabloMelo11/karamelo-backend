@@ -8,6 +8,12 @@ class Product extends Model {
     return ['image_url'];
   }
 
+  static boot() {
+    super.boot();
+
+    this.addTrait('@provider:CastAttributes');
+  }
+
   categories() {
     return this.belongsToMany('App/Models/Category');
   }
@@ -18,6 +24,12 @@ class Product extends Model {
 
   getImageUrl({ image }) {
     return `${Env.get('APP_URL')}/files/${image || 'product.png'}`;
+  }
+
+  static get casts() {
+    return {
+      price: 'float',
+    };
   }
 }
 
