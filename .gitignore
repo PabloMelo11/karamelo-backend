@@ -2,11 +2,10 @@
 node_modules
 
 # Adonis directory for storing tmp files
-tmp/uploads/*
 !tmp/uploads/.gitkeep
 !tmp/test/*
-!tpm/uploads/placeholder.png
-!tpm/uploads/product.png
+
+
 
 # Environment variables, never commit this file
 .env
