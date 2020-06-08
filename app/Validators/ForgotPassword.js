@@ -1,5 +1,3 @@
-const Antl = use('Antl');
-
 const { rule } = use('Validator');
 
 class ForgotPassword {
@@ -14,7 +12,10 @@ class ForgotPassword {
   }
 
   get messages() {
-    return Antl.list('validation');
+    return {
+      'email.required': 'E-mail obrigatorio',
+      'email.email': 'Precisa ser um e-mail valido.',
+    };
   }
 }
 

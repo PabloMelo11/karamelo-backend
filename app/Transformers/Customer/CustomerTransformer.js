@@ -10,6 +10,7 @@ class CustomerTransformer extends BumblebeeTransformer {
     return {
       id: customer.id,
       name: customer.name,
+      cpf: customer.cpf,
       whatsapp: customer.whatsapp,
       email: customer.email,
       state: customer.state,

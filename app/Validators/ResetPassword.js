@@ -1,5 +1,3 @@
-const Antl = use('Antl');
-
 const { rule } = use('Validator');
 
 class ResetPassword {
@@ -15,7 +13,9 @@ class ResetPassword {
   }
 
   get messages() {
-    return Antl.list('validation');
+    return {
+      token: 'O token e obrigatorio.',
+    };
   }
 }
 

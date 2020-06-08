@@ -1,5 +1,3 @@
-const Antl = use('Antl');
-
 const { rule } = use('Validator');
 
 class Session {
@@ -15,7 +13,10 @@ class Session {
   }
 
   get messages() {
-    return Antl.list('validation');
+    return {
+      'name.required': 'O nome e obrigatório!',
+      'password.required': 'A senha e obrigatória!',
+    };
   }
 }
 
