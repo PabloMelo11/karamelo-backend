@@ -43,6 +43,16 @@ class ProductController {
       'categories',
     ]);
 
+    const checkNameProduct = await Product.query()
+      .where('name', data.name)
+      .first();
+
+    if (checkNameProduct) {
+      return response
+        .status(400)
+        .json({ error: 'Ja existe um produto com esse nome.' });
+    }
+
     const product = await user.products().create(data);
 
     if (categories && categories.length > 0) {
@@ -64,9 +74,29 @@ class ProductController {
       'name',
       'description',
       'price',
-      '',
       'categories',
     ]);
+
+    const checkNameProduct = await Product.query()
+      .where('name', data.name)
+      .first();
+
+    if (checkNameProduct && checkNameProduct.name !== product.name) {
+      return response
+        .status(400)
+        .json({ error: 'Esse nome ja esta vinculado a outro produto.' });
+    }
+
+    if (categories) {
+      const [checkNumberZeroCategories] = categories.filter(
+        category => category <= 0
+      );
+      if (checkNumberZeroCategories && checkNumberZeroCategories === 0) {
+        return response
+          .status(400)
+          .json({ error: 'Nao existe uma categoria com Id 0.' });
+      }
+    }
 
     await product.categories().detach();
 

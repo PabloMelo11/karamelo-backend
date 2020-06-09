@@ -57,8 +57,10 @@ Route.group(() => {
   Route.get('/products', 'ProductController.index');
   Route.get('/products/:id', 'ProductController.show');
 
-  Route.post('/products', 'ProductController.store');
-  Route.put('/products/:id', 'ProductController.update');
+  Route.post('/products', 'ProductController.store').validator('CreateProduct');
+  Route.put('/products/:id', 'ProductController.update').validator(
+    'UpdateProduct'
+  );
 }).middleware('auth');
 
 Route.group(() => {
