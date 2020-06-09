@@ -55,6 +55,14 @@ class CategoryController {
 
     const data = request.only(['description', 'title']);
 
+    const checkCategory = await Category.query()
+      .where('title', data.title)
+      .first();
+
+    if (checkCategory && checkCategory.title !== category.title) {
+      return response.status(400).json({ error: 'Essa categoria ja existe.' });
+    }
+
     category.merge(data);
 
     await category.save();

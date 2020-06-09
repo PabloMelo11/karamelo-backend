@@ -49,7 +49,9 @@ Route.group(() => {
   Route.get('/categories', 'CategoryController.index');
   Route.get('/categories/:id', 'CategoryController.show');
 
-  Route.post('/categories', 'CategoryController.store');
+  Route.post('/categories', 'CategoryController.store').validator(
+    'CreateCategory'
+  );
   Route.put('/categories/:id', 'CategoryController.update');
 }).middleware('auth');
 
