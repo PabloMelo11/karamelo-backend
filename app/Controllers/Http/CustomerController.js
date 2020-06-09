@@ -65,7 +65,7 @@ class CustomerController {
     return response.status(201).json(customer);
   }
 
-  async update({ request, params }) {
+  async update({ response, request, params }) {
     const customer = await Customer.find(params.id);
 
     const data = request.only([
@@ -80,6 +80,26 @@ class CustomerController {
       'status',
       'cpf',
     ]);
+
+    const checkEmail = await Customer.query()
+      .where('email', data.email)
+      .first();
+
+    if (checkEmail && checkEmail.email !== customer.email) {
+      return response
+        .status(400)
+        .json({ error: 'Esse e-mail ja esta sendo usado por outro usuario.' });
+    }
+
+    const checkCPF = await Customer.query()
+      .where('cpf', data.cpf)
+      .first();
+
+    if (checkCPF && checkCPF.cpf !== customer.cpf) {
+      return response
+        .status(400)
+        .json({ error: 'Esse CPF ja esta sendo usado por outro usuarios.' });
+    }
 
     customer.merge(data);
 
