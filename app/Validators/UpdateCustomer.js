@@ -13,7 +13,7 @@ class UpdateCustomer {
 
   get messages() {
     return {
-      'status.in': 'O status pode ser ativo ou inativo',
+      'status.in': 'O status pode ser active ou inactive',
     };
   }
 }

@@ -19,7 +19,7 @@ class CreateUser {
       'name.required': 'O nome e obrigatorio.',
       'email.email': 'E necessario um e-mail valido.',
       'password.required': 'A senha e obrigatoria.',
-      'status.in': 'O status pode ser ativo ou inativo.',
+      'status.in': 'O status pode ser active ou inactive.',
     };
   }
 }

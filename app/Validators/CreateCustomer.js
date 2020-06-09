@@ -17,7 +17,7 @@ class CreateCustomer {
     return {
       'name.required': 'O nome e obrigatorio.',
       'cpf.required': 'O CPF e obrigatorio.',
-      'status.in': 'O status pode ser ativo ou inativo.',
+      'status.in': 'O status pode ser active ou inactive.',
     };
   }
 }

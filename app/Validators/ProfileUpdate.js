@@ -7,18 +7,19 @@ class UpdateProfile {
 
   get rules() {
     return {
-      customer_id: [rule('required')],
-      date: [rule('dateFormat', 'YYYY-MM-DDTHH:mm:ss')],
-      'items.*.product_id': 'exists:products,id',
+      name: [rule('required')],
+      email: [rule('required')],
+      password: [rule('confirmed')],
     };
   }
 
   get messages() {
     return {
-      'customer_id.required': 'O id do customer e obrigatorio.',
-      'date.dateFormat': 'Data invalida.',
-      'items.*.product_id.exists':
-        'O id do produto nao existe na base de dados.',
+      'name.required':
+        'Seu nome nao esta preenchido! Por favor preencher o campo.',
+      'email.required':
+        'Seu e-mail nao esta preenchido! Por favor preencher o campo.',
+      'password.confirmed': 'Para trocar sua senha, e necessario confirma-la.',
     };
   }
 }

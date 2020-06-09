@@ -15,7 +15,7 @@ class UpdateUser {
   get messages() {
     return {
       'password.confirmed': 'E necessario a confirmacao de senha correta.',
-      'status.in': 'O status pode ser ativo ou inativo.',
+      'status.in': 'O status pode ser active ou inactive.',
     };
   }
 }
