@@ -65,11 +65,11 @@ Route.group(() => {
   Route.get('/orders', 'OrderController.index');
   Route.get('/orders/:id', 'OrderController.show');
 
-  Route.post('/orders', 'OrderController.store');
-  Route.put('/orders/:id', 'OrderController.update');
+  Route.post('/orders', 'OrderController.store').validator('CreateOrder');
+  Route.put('/orders/:id', 'OrderController.update').validator('UpdateOrder');
 }).middleware('auth');
 
 Route.group(() => {
-  Route.get('/me/orders', 'ProfileController.index');
-  Route.put('/me', 'ProfileController.update');
+  Route.get('/me', 'ProfileController.index');
+  Route.put('/me', 'ProfileController.update').validator('UpdateProfile');
 }).middleware('auth');

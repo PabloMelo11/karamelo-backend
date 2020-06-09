@@ -1,5 +1,3 @@
-const Antl = use('Antl');
-
 const { rule } = use('Validator');
 
 class UpdateCustomer {
@@ -14,7 +12,9 @@ class UpdateCustomer {
   }
 
   get messages() {
-    return Antl.list('validation');
+    return {
+      'status.in': 'O status pode ser ativo ou inativo',
+    };
   }
 }
 

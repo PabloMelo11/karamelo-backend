@@ -9,7 +9,7 @@ class ProfileController {
 
     const orders = await User.query()
       .where('id', user.id)
-      .select('id', 'name')
+      .select('id', 'name', 'avatar', 'email', 'created_at', 'updated_at')
       .with('orders', builderOrder => {
         builderOrder.with('customer', builderCustomer => {
           builderCustomer.select(['id', 'name']);
@@ -20,10 +20,42 @@ class ProfileController {
     return response.status(200).json(orders);
   }
 
-  async update({ request, auth }) {
+  async update({ response, request, auth }) {
     const user = await auth.getUser();
 
     const data = request.only(['name', 'email', 'status']);
+
+    if (!data.email) {
+      return response.status(400).json({
+        error: 'Seu e-mail nao esta preenchido! Por favor preencher o campo.',
+      });
+    }
+
+    if (!data.name) {
+      return response.status(400).json({
+        error: 'Seu nome nao esta preenchido! Por favor preencher o campo.',
+      });
+    }
+
+    const checkEmailUser = await User.query()
+      .where('email', data.email)
+      .first();
+
+    if (checkEmailUser && checkEmailUser.email !== user.email) {
+      return response
+        .status(400)
+        .json({ error: 'Esse e-mail ja esta vinculado a uma conta.' });
+    }
+
+    const checkNameUser = await User.query()
+      .where('name', data.name)
+      .first();
+
+    if (checkNameUser && checkNameUser.name !== user.name) {
+      return response
+        .status(400)
+        .json({ error: 'Esse nome de usuario ja esta vinculado a uma conta.' });
+    }
 
     const avatar = request.file('avatar');
 

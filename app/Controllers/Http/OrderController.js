@@ -1,6 +1,9 @@
 /** @typedef {import('@adonisjs/framework/src/Request')} Request */
 /** @typedef {import('@adonisjs/framework/src/Response')} Response */
 
+/** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
+const Customer = use('App/Models/Customer');
+
 const Database = use('Database');
 const Order = use('App/Models/Order');
 const OrderService = use('App/Services/Order/OrderService');
@@ -21,7 +24,7 @@ class OrderController {
     const order = await Order.find(params.id);
 
     if (!order) {
-      return response.status(400).json({ errro: 'Order not found' });
+      return response.status(400).json({ errro: 'Encomenda nao encontrado.' });
     }
 
     return response.json(
@@ -42,6 +45,12 @@ class OrderController {
         'status',
         'date',
       ]);
+
+      const checkCustomer = await Customer.find(customer_id);
+
+      if (!checkCustomer) {
+        return response.status(400).json({ error: 'Usuario nao encontrado.' });
+      }
 
       let order = await user
         .orders()
@@ -80,7 +89,7 @@ class OrderController {
     let order = await Order.find(params.id);
 
     if (!order) {
-      return response.status(400).json({ error: 'Order not found.' });
+      return response.status(400).json({ error: 'Encomenda nao encontrada.' });
     }
 
     const trx = await Database.beginTransaction();

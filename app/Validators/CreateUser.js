@@ -1,5 +1,3 @@
-const Antl = use('Antl');
-
 const { rule } = use('Validator');
 
 class CreateUser {
@@ -10,14 +8,19 @@ class CreateUser {
   get rules() {
     return {
       name: [rule('required')],
-      email: [rule('required'), rule('email')],
+      email: [rule('email')],
       password: [rule('required')],
       status: [rule('in', ['active', 'inactive'])],
     };
   }
 
   get messages() {
-    return Antl.list('validation');
+    return {
+      'name.required': 'O nome e obrigatorio.',
+      'email.email': 'E necessario um e-mail valido.',
+      'password.required': 'A senha e obrigatoria.',
+      'status.in': 'O status pode ser ativo ou inativo.',
+    };
   }
 }
 

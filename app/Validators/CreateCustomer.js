@@ -1,5 +1,3 @@
-const Antl = use('Antl');
-
 const { rule } = use('Validator');
 
 class CreateCustomer {
@@ -10,12 +8,17 @@ class CreateCustomer {
   get rules() {
     return {
       name: [rule('required')],
+      cpf: [rule('required')],
       status: [rule('in', ['active', 'inactive'])],
     };
   }
 
   get messages() {
-    return Antl.list('validation');
+    return {
+      'name.required': 'O nome e obrigatorio.',
+      'cpf.required': 'O CPF e obrigatorio.',
+      'status.in': 'O status pode ser ativo ou inativo.',
+    };
   }
 }
 

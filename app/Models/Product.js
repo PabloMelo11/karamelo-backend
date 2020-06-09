@@ -23,7 +23,7 @@ class Product extends Model {
   }
 
   getImageUrl({ image }) {
-    return `${Env.get('APP_URL')}/files/${image || 'product.png'}`;
+    return `${Env.get('APP_URL_BACK')}/files/${image || 'product.png'}`;
   }
 
   static get casts() {

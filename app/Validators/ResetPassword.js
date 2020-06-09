@@ -14,7 +14,9 @@ class ResetPassword {
 
   get messages() {
     return {
-      token: 'O token e obrigatorio.',
+      'token.required': 'O token e obrigatorio.',
+      'password.required': 'A senha e obrigatoria.',
+      'password.confirmed': 'A necessario a confirmacao de senha.',
     };
   }
 }
