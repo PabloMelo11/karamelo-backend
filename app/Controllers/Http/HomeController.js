@@ -24,6 +24,30 @@ class HomeController {
 
     return response.json(data);
   }
+
+  async update({ response, request, params }) {
+    try {
+      const order = await Order.find(params.orderId);
+
+      if (!order) {
+        return response
+          .status(400)
+          .json({ error: 'Encomenda nao encontrada.' });
+      }
+
+      const { status } = request.only(['status']);
+
+      order.merge({ status });
+
+      await order.save();
+
+      return response.status(204).json();
+    } catch (err) {
+      return response
+        .status(err.status)
+        .json({ error: 'Erro ao tentar trocar o status da encomenda.' });
+    }
+  }
 }
 
 module.exports = HomeController;

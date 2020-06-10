@@ -26,7 +26,12 @@ Route.post('/reset', 'ResetPasswordController.store').validator(
   'ResetPassword'
 );
 
-Route.get('/home', 'HomeController.index').middleware('auth');
+Route.group(() => {
+  Route.get('/home', 'HomeController.index');
+  Route.patch('/home/order/:orderId', 'HomeController.update').validator(
+    'HomeUpdate'
+  );
+}).middleware('auth');
 
 Route.group(() => {
   Route.get('/users', 'UserController.index');
