@@ -7,6 +7,7 @@ const HomeSerializer = use('App/Serializers/HomeSerializer');
 class HomeController {
   async index({ response }) {
     const orders = await Order.query()
+      .whereNot('status', 'canceled')
       .with('customer', customerBuilder => {
         customerBuilder.select(['id', 'name', 'cpf']);
       })
