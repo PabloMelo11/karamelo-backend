@@ -34,7 +34,7 @@ test('it should be able to list users', async ({ assert, client }) => {
 
   response.assertStatus(200);
 
-  assert.exists(response.body[0].id);
+  assert.exists(response.body.data[0].id);
 });
 
 test('it should be able to show single user', async ({ assert, client }) => {

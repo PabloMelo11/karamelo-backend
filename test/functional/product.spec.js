@@ -42,7 +42,7 @@ test('it should be able to list all products', async ({ client, assert }) => {
     .loginVia(user, 'jwt')
     .end();
 
-  assert.exists(response.body[0].id);
+  assert.exists(response.body.data[0].id);
   response.assertStatus(200);
 });
 

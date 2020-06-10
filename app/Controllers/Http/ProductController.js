@@ -7,7 +7,7 @@ class ProductController {
   async index({ request, pagination, response }) {
     const name = request.input('name');
 
-    const products = await Product.query()
+    const products = Product.query()
       .select(['id', 'name', 'image', 'price', 'user_id', 'created_at'])
       .with('categories', builder => {
         builder.select(['id', 'title']);
