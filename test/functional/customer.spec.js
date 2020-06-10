@@ -64,7 +64,8 @@ test('it should be able to update customer', async ({ assert, client }) => {
   const user = await Factory.model('App/Models/User').create();
   const customer = await Factory.model('App/Models/Customer').create({
     name: 'Guilherme',
-    email: 'jorge@teste.com',
+    email: 'guilherme@teste.com',
+    cpf: '48412544154',
   });
 
   const response = await client
@@ -72,6 +73,7 @@ test('it should be able to update customer', async ({ assert, client }) => {
     .loginVia(user, 'jwt')
     .field('name', 'Jorge')
     .field('email', 'jorge@gmail.com')
+    .field('cpf', '4521255412')
     .end();
 
   response.assertStatus(200);

@@ -33,6 +33,7 @@ class CustomerController {
   async store({ request, response }) {
     const data = request.only([
       'name',
+      'cpf',
       'whatsapp',
       'email',
       'state',
@@ -41,7 +42,6 @@ class CustomerController {
       'street',
       'number',
       'status',
-      'cpf',
     ]);
 
     const checkEmail = await Customer.query()
@@ -70,6 +70,7 @@ class CustomerController {
 
     const data = request.only([
       'name',
+      'cpf',
       'whatsapp',
       'state',
       'email',
@@ -78,7 +79,6 @@ class CustomerController {
       'street',
       'number',
       'status',
-      'cpf',
     ]);
 
     const checkEmail = await Customer.query()

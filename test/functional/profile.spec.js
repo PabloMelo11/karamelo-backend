@@ -16,6 +16,7 @@ test('it should be able the user to be update his profile', async ({
 }) => {
   const user = await Factory.model('App/Models/User').create({
     name: 'Pablo',
+    email: 'pablo@gmail.com',
     password: '123456',
   });
 
@@ -23,6 +24,7 @@ test('it should be able the user to be update his profile', async ({
     .put('/me')
     .loginVia(user, 'jwt')
     .field('name', 'Jorge')
+    .field('email', 'teste@gmail.com')
     .field('password', '123456789')
     .field('password_confirmation', '123456789')
     .attach('avatar', Helpers.tmpPath('test/avatar.png'))
@@ -31,6 +33,7 @@ test('it should be able the user to be update his profile', async ({
   response.assertStatus(200);
 
   assert.equal(response.body.name, 'Jorge');
+  assert.equal(response.body.email, 'teste@gmail.com');
   assert.exists(response.body.avatar);
 
   await user.reload();
