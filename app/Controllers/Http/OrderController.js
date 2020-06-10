@@ -49,7 +49,7 @@ class OrderController {
       const checkCustomer = await Customer.find(customer_id);
 
       if (!checkCustomer) {
-        return response.status(400).json({ error: 'Usuario nao encontrado.' });
+        return response.status(400).json({ error: 'Cliente nao encontrado.' });
       }
 
       let order = await user
