@@ -12,6 +12,7 @@ const OrderTransformer = use('App/Transformers/Order/OrderTransformer');
 class OrderController {
   async index({ transform, response, pagination }) {
     const orders = await Order.query()
+      .whereNot('status', 'canceled')
       .orderBy('id', 'DESC')
       .paginate(pagination.page, pagination.perpage);
 
@@ -24,7 +25,7 @@ class OrderController {
     const order = await Order.find(params.id);
 
     if (!order) {
-      return response.status(400).json({ errro: 'Encomenda nao encontrado.' });
+      return response.status(400).json({ error: 'Encomenda nao encontrado.' });
     }
 
     return response.json(
