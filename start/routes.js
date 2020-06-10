@@ -74,6 +74,6 @@ Route.group(() => {
 }).middleware('auth');
 
 Route.group(() => {
-  Route.get('/me', 'ProfileController.index');
+  Route.get('/me', 'ProfileController.show');
   Route.put('/me', 'ProfileController.update').validator('UpdateProfile');
 }).middleware('auth');

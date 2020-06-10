@@ -12,7 +12,7 @@ const OrderTransformer = use('App/Transformers/Order/OrderTransformer');
 class OrderController {
   async index({ transform, response, pagination }) {
     const orders = await Order.query()
-      .orderBy('id', 'DESC')
+      .orderBy('date', 'DESC')
       .paginate(pagination.page, pagination.perpage);
 
     return response.json(

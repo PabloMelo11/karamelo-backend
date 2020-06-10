@@ -4,15 +4,22 @@ const Product = use('App/Models/Product');
 const Helpers = use('Helpers');
 
 class ProductController {
-  async index() {
+  async index({ request, pagination, response }) {
+    const name = request.input('name');
+
     const products = await Product.query()
       .select(['id', 'name', 'image', 'price', 'user_id', 'created_at'])
       .with('categories', builder => {
         builder.select(['id', 'title']);
-      })
-      .fetch();
+      });
 
-    return products;
+    if (name) {
+      products.where('name', 'ILIKE', `%${name}%`);
+    }
+
+    const data = await products.paginate(pagination.page, pagination.limit);
+
+    return response.json(data);
   }
 
   async show({ response, params }) {

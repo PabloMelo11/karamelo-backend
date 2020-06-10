@@ -4,7 +4,7 @@ const User = use('App/Models/User');
 const Helpers = use('Helpers');
 
 class ProfileController {
-  async index({ response, auth }) {
+  async show({ response, auth }) {
     const user = await auth.getUser();
 
     const orders = await User.query()

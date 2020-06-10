@@ -2,12 +2,24 @@
 const User = use('App/Models/User');
 
 class UserController {
-  async index() {
-    const users = await User.query()
-      .select(['id', 'name', 'email', 'avatar', 'status'])
-      .fetch();
+  async index({ response, request, pagination }) {
+    const name = request.input('name');
 
-    return users;
+    const users = User.query().select([
+      'id',
+      'name',
+      'email',
+      'avatar',
+      'status',
+    ]);
+
+    if (name) {
+      users.where('name', 'ILIKE', `%${name}%`);
+    }
+
+    const data = await users.paginate(pagination.page, pagination.limit);
+
+    return response.json(data);
   }
 
   async show({ params }) {
