@@ -8,7 +8,7 @@ class SessionController {
 
     const userQuery = await User.query()
       .where('name', name)
-      .select('id', 'name', 'avatar')
+      .select('id', 'name', 'email', 'avatar')
       .fetch();
 
     const [user] = userQuery.rows.map(userInArray => userInArray);
