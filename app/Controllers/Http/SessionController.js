@@ -6,10 +6,12 @@ class SessionController {
 
     const { token } = await auth.attempt(name, password);
 
-    const user = await User.query()
+    const userQuery = await User.query()
       .where('name', name)
       .select('id', 'name', 'avatar')
       .fetch();
+
+    const [user] = userQuery.rows.map(userInArray => userInArray);
 
     return response.json({
       token,
