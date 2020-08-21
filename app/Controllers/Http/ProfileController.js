@@ -56,7 +56,7 @@ class ProfileController {
       'date_of_birth',
     ]);
 
-    if (data.cep.length > 9) {
+    if (data.cep && data.cep.length > 9) {
       return response.status(400).json({ error: 'CEP inválido.' });
     }
 
