@@ -17,6 +17,7 @@ class ProfileController {
         'cpf',
         'phone',
         'whatsapp',
+        'cep',
         'state',
         'city',
         'neighborhood',
@@ -46,6 +47,7 @@ class ProfileController {
       'cpf',
       'phone',
       'whatsapp',
+      'cep',
       'state',
       'city',
       'neighborhood',
@@ -53,6 +55,10 @@ class ProfileController {
       'number',
       'date_of_birth',
     ]);
+
+    if (data.cep.length > 9) {
+      return response.status(400).json({ error: 'CEP inválido.' });
+    }
 
     if (!data.email) {
       return response.status(400).json({

@@ -26,6 +26,7 @@ class DatabaseSeeder {
       cpf: '4810324587',
       phone: '12988784512',
       whatsapp: '19985421254',
+      cep: '13482-060',
       state: 'Sao Paulo',
       city: 'Limeira',
       neighborhood: 'Bairro dos loucos',
