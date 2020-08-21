@@ -42,7 +42,7 @@ class UserController {
       .first();
 
     if (checkEmail) {
-      return response.status(400).json({ error: 'Email already exists' });
+      return response.status(400).json({ error: 'Esse e-mail ja existe.' });
     }
 
     const checkUsername = await User.query()
@@ -50,7 +50,7 @@ class UserController {
       .first();
 
     if (checkUsername) {
-      return response.status(400).json({ error: 'Name already exists' });
+      return response.status(400).json({ error: 'Esse nome ja existe.' });
     }
 
     const user = await User.create(data);

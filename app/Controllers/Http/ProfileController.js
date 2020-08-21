@@ -9,7 +9,23 @@ class ProfileController {
 
     const orders = await User.query()
       .where('id', user.id)
-      .select('id', 'name', 'avatar', 'email', 'created_at', 'updated_at')
+      .select(
+        'id',
+        'name',
+        'avatar',
+        'email',
+        'cpf',
+        'phone',
+        'whatsapp',
+        'state',
+        'city',
+        'neighborhood',
+        'street',
+        'number',
+        'date_of_birth',
+        'created_at',
+        'updated_at'
+      )
       .with('orders', builderOrder => {
         builderOrder.with('customer', builderCustomer => {
           builderCustomer.select(['id', 'name']);
@@ -23,7 +39,20 @@ class ProfileController {
   async update({ response, request, auth }) {
     const user = await auth.getUser();
 
-    const data = request.only(['name', 'email', 'status']);
+    const data = request.only([
+      'name',
+      'email',
+      'status',
+      'cpf',
+      'phone',
+      'whatsapp',
+      'state',
+      'city',
+      'neighborhood',
+      'street',
+      'number',
+      'date_of_birth',
+    ]);
 
     if (!data.email) {
       return response.status(400).json({
@@ -55,6 +84,18 @@ class ProfileController {
       return response
         .status(400)
         .json({ error: 'Esse nome de usuario ja esta vinculado a uma conta.' });
+    }
+
+    if (data.cpf) {
+      const checkCPF = await User.query()
+        .where('cpf', data.cpf)
+        .first();
+
+      if (checkCPF && checkCPF.cpf !== user.cpf) {
+        return response
+          .status(400)
+          .json({ error: 'Esse CPF ja esta vinculado a uma conta.' });
+      }
     }
 
     const avatar = request.file('avatar');

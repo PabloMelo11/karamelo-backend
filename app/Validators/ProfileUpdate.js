@@ -10,6 +10,7 @@ class UpdateProfile {
       name: [rule('required')],
       email: [rule('required')],
       password: [rule('confirmed')],
+      cpf: [rule('unique', ['users', 'cpf'])],
     };
   }
 
@@ -20,6 +21,7 @@ class UpdateProfile {
       'email.required':
         'Seu e-mail nao esta preenchido! Por favor preencher o campo.',
       'password.confirmed': 'Para trocar sua senha, e necessario confirma-la.',
+      'cpf.unique': 'Esse Cpf ja esta sendo utilizado.',
     };
   }
 }

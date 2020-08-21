@@ -23,6 +23,15 @@ class DatabaseSeeder {
       name: 'admin',
       email: 'admin@gmail.com',
       password: '123456',
+      cpf: '4810324587',
+      phone: '12988784512',
+      whatsapp: '19985421254',
+      state: 'Sao Paulo',
+      city: 'Limeira',
+      neighborhood: 'Bairro dos loucos',
+      street: 'Rua dos loucos',
+      number: '12A',
+      date_of_birth: '11/08/2000',
       status: 'active',
     });
 

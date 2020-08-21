@@ -10,6 +10,10 @@ class User extends Model {
     return ['avatar_url'];
   }
 
+  static get hidden() {
+    return ['password'];
+  }
+
   static boot() {
     super.boot();
 
