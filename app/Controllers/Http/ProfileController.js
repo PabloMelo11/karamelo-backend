@@ -1,8 +1,6 @@
 /** @type {typeof import('@adonisjs/lucid/src/Lucid/Model')} */
 const User = use('App/Models/User');
 
-const Helpers = use('Helpers');
-
 class ProfileController {
   async show({ response, auth }) {
     const user = await auth.getUser();
@@ -102,20 +100,6 @@ class ProfileController {
           .status(400)
           .json({ error: 'Esse CPF ja esta vinculado a uma conta.' });
       }
-    }
-
-    const avatar = request.file('avatar');
-
-    if (avatar) {
-      await avatar.move(Helpers.tmpPath('uploads'), {
-        name: `${new Date().getTime()}.${avatar.subtype}`,
-      });
-
-      if (!avatar.moved()) {
-        return avatar.error();
-      }
-
-      user.avatar = avatar.fileName;
     }
 
     user.merge(data);
