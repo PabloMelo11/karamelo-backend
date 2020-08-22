@@ -6,8 +6,6 @@ class AvatarProfileController {
 
     const avatar = request.file('avatar');
 
-    console.log(avatar);
-
     if (avatar) {
       await avatar.move(Helpers.tmpPath('uploads'), {
         name: `${new Date().getTime()}.${avatar.subtype}`,
@@ -19,8 +17,6 @@ class AvatarProfileController {
 
       user.avatar = avatar.fileName;
     }
-
-    // user.merge(avatar);
 
     await user.save();
 
