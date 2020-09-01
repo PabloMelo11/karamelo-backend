@@ -11,7 +11,7 @@ class OrderService {
 
     const checkQuantity = items.filter(item => item.quantity >= 1);
 
-    if (checkQuantity.length === 0) {
+    if (checkQuantity.length <= 0) {
       throw new Error('O produto deve possuir pelo menos 1 quantidade.');
     }
 

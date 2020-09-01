@@ -106,6 +106,8 @@ class ProfileController {
 
     const password = request.input('password');
 
+    console.log(password);
+
     if (password) {
       user.password = password;
     }
