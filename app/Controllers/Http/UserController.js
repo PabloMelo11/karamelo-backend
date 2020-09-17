@@ -28,7 +28,11 @@ class UserController {
       .select(['id', 'name', 'email', 'avatar', 'status'])
       .with('products')
       .with('categories')
-      .with('orders')
+      .with('orders', ordersBuilder => {
+        ordersBuilder.with('customer', customerBuilder => {
+          customerBuilder.select(['id', 'name']);
+        });
+      })
       .fetch();
 
     return user;
