@@ -80,7 +80,7 @@ Route.group(() => {
 
 Route.group(() => {
   Route.get('/me', 'ProfileController.show');
-  Route.put('/me', 'ProfileController.update').validator('ProfileUpdate');
+  Route.put('/me', 'ProfileController.update').validator('UpdateProfile');
   Route.patch('/me/avatar', 'AvatarProfileController.update').validator(
     'AvatarProfile'
   );

@@ -85,9 +85,9 @@ class ProfileController {
       .first();
 
     if (checkNameUser && checkNameUser.name !== user.name) {
-      return response
-        .status(400)
-        .json({ error: 'Esse nome de usuario ja esta vinculado a uma conta.' });
+      return response.status(400).json({
+        error: 'Esse nome de usuario ja esta vinculado a uma conta.',
+      });
     }
 
     if (data.cpf) {
@@ -102,11 +102,9 @@ class ProfileController {
       }
     }
 
-    user.merge(data);
+    await user.merge(data);
 
     const password = request.input('password');
-
-    console.log(password);
 
     if (password) {
       user.password = password;
